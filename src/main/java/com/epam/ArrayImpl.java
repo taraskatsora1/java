@@ -41,7 +41,7 @@ public class ArrayImpl implements Array {
 
     @Override
     public Iterator<Object> iterator() {
-        return new IteratorImpl();
+        return new IteratorImpl(this);
     }
 
 
@@ -79,28 +79,27 @@ public class ArrayImpl implements Array {
 
     }
 
-    private class IteratorImpl implements Iterator<Object> {
-        int current = 1;
-        Object[] objects;
+    private static class IteratorImpl implements Iterator<Object> {
+        private final Array array;
+        int iteratorIndex = 0;
 
-        @Override
-        public boolean hasNext() {
-            for (int i = 0; i < objects.length; i++) {
-                if (objects[i].equals(current)){
-                    return true;
-                }
-            }
-            return false;
+        private IteratorImpl(Array array) {
+            this.array = array;
         }
 
         @Override
-        public Object next() {
-            return objects[current + 1];
+        public boolean hasNext() {
+            return iteratorIndex < array.size();
+        }
+
+        @Override
+        public Object next() {            
+            return array.get(iteratorIndex++);
         }
 
         @Override
         public void remove() {
-
+            array.remove(iteratorIndex);
         }
 
     }
@@ -123,7 +122,14 @@ public class ArrayImpl implements Array {
         for (int i = 0; i < array.size(); i++) {
             System.out.println(array.get(i));
         }
+        
+        Iterator<Object> iterator = array.iterator();
+        while (iterator.hasNext()) {
+            final Object nextObject = iterator.next();
 
+            System.out.println("next=" + nextObject);
+        }
+        
     }
 
 }

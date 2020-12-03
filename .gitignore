@@ -1,0 +1,16 @@
+.DS_Store
+.project
+.settings
+.gradle
+.idea/
+*.iml
+*.jar
+target/
+venv/
+*.log
+deployment/test
+.pytest*
+.vscode*
+virtualenv*
+**/build/
+**/out*
